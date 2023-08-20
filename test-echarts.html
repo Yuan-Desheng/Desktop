@@ -430,7 +430,7 @@
 </script>
 <script>
     const chartDom = document.getElementById('chart')
-    const chart = echarts.init(chartDom, 'customed')
+    const chart = echarts.init(chartDom, 'customed', {renderer: 'svg'});
     chart.setOption({
         title: {
             text: '快速入门ECharts开发'
