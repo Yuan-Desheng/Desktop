@@ -16,21 +16,29 @@
     const chartDom = document.getElementById('chart')
     const chart = echarts.init(chartDom)
     const option = {
-        xAxis: {},
-        yAxis: {},
+        legend: {},
+        tooltip: {},
+        xAxis: {
+            type: 'category'
+        },
+        yAxis: [{
+            min: 0,
+            max: 100
+        }, {
+            min: 0,
+            max: 100
+        }],
         dataset: {
             source: [
-                [13, 44],
-                [51, 51],
-                [51, 32],
-                [67, 19],
-                [19, 33]
+                ['product', '2012', '2013', '2014', '2015'],
+                ['Matcha Latte', 41.1, 30.4, 65.1, 53.3],
+                ['Milk Tea', 86.5, 92.1, 85.7, 83.1]
             ]
         },
-        series: [{
-            type: 'scatter',
-            encode: { x: 0, y: 1 }
-        }]
+        series: [
+            { type: 'bar', seriesLayoutBy: 'row', yAxisIndex: 0 },
+            { type: 'line', seriesLayoutBy: 'row', yAxisIndex: 1 }
+        ]
     }
     chart.setOption(option)
 </script>
