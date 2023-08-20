@@ -1,7 +1,6 @@
-<!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
+    <meta charSet="utf-8">
     <script src="https://cdn.jsdelivr.net/npm/echarts@4.7.0/dist/echarts.min.js"></script>
     <style>
         #chart {
@@ -17,28 +16,28 @@
     const chart = echarts.init(chartDom)
     const option = {
         xAxis: {
-            data: ['一季度', '二季度', '三季度', '四季度']
+            type: 'category'
         },
         yAxis: {},
+        dataset: {
+            source: [
+                ['一季度', 79, 100, '分类1', 50],
+                ['二季度', 81, 112, '分类2', 60],
+                ['三季度', 88, 96, '分类3', 55],
+                ['四季度', 72, 123, '分类4', 70],
+            ]
+        },
         series: [{
             type: 'pie',
             center: ['65%', 60],
             radius: 35,
-            data: [{
-                name: '分类1', value: 50
-            }, {
-                name: '分类2', value: 60
-            }, {
-                name: '分类3', value: 55
-            }, {
-                name: '分类4', value: 70
-            }]
+            encode: {itemName: 3, value: 4}
         }, {
             type: 'line',
-            data: [100, 112, 96, 123]
+            encode: {x: 0, y: 2}
         }, {
             type: 'bar',
-            data: [79, 81, 88, 72]
+            encode: {x: 0, y: 1}
         }]
     }
     chart.setOption(option)
