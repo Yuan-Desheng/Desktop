@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="utf-8">
     <script src="https://cdn.jsdelivr.net/npm/echarts@4.7.0/dist/echarts.min.js"></script>
     <style>
         #chart {
@@ -13,20 +14,34 @@
 <div id="chart"></div>
 <script>
     const chartDom = document.getElementById('chart')
-    const chart = echarts.init(chartDom);
-    chart.setOption({
-        title: {
-            text: '¿ìËÙÈëÃÅECharts¿ª·¢'
-        },
+    const chart = echarts.init(chartDom)
+    const option = {
         xAxis: {
-            data: ['Ê³Æ·', 'ÊýÂë', '·þÊÎ', 'Ïä°ü']
+            data: ['ä¸€å­£åº¦', 'äºŒå­£åº¦', 'ä¸‰å­£åº¦', 'å››å­£åº¦']
         },
         yAxis: {},
-        series: {
+        series: [{
+            type: 'pie',
+            center: ['65%', 60],
+            radius: 35,
+            data: [{
+                name: 'åˆ†ç±»1', value: 50
+            }, {
+                name: 'åˆ†ç±»2', value: 60
+            }, {
+                name: 'åˆ†ç±»3', value: 55
+            }, {
+                name: 'åˆ†ç±»4', value: 70
+            }]
+        }, {
+            type: 'line',
+            data: [100, 112, 96, 123]
+        }, {
             type: 'bar',
-            data: [100, 120, 90, 150]
-        }
-    })
+            data: [79, 81, 88, 72]
+        }]
+    }
+    chart.setOption(option)
 </script>
 </body>
 </html>
