@@ -1,6 +1,7 @@
 <template>
   <div class="home">
     report
+    <el-button type="primary">primary</el-button>
   </div>
 </template>
 
