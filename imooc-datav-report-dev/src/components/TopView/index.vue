@@ -3,22 +3,22 @@
     <el-row :gutter="20">
       <el-col :span="6">
         <el-card class="box-card">
-          鼠标悬浮显示
+          <total-sales />
         </el-card>
       </el-col>
       <el-col :span="6">
         <el-card class="box-card">
-          鼠标悬浮显示
+          <total-orders />
         </el-card>
       </el-col>
       <el-col :span="6">
         <el-card class="box-card">
-          鼠标悬浮显示
+          <today-users />
         </el-card>
       </el-col>
       <el-col :span="6">
         <el-card class="box-card">
-          鼠标悬浮显示
+          <total-users />
         </el-card>
       </el-col>
     </el-row>
@@ -26,8 +26,18 @@
 </template>
 
 <script>
+import TotalSales from "@/components/TopView/components/TotalSales/index.vue";
+import TotalOrders from "@/components/TopView/components/TotalOrders/index.vue";
+import TotalUsers from "@/components/TopView/components/TotalUsers/index.vue";
+import TodayUsers from "@/components/TopView/components/TodayUsers/index.vue";
 export default {
-  name: "index"
+  name: "index",
+  components: {
+    TotalSales,
+    TotalOrders,
+    TotalUsers,
+    TodayUsers
+  }
 }
 </script>
 
