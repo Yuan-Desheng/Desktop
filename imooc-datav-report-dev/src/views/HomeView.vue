@@ -1,7 +1,5 @@
 <template>
   <div class="home">
-    report
-    <el-button type="primary">primary</el-button>
     <top-view />
     <sales-view />
     <bottom-view />
