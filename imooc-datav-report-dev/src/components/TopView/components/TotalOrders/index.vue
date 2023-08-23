@@ -22,8 +22,10 @@ export default {
     const chart = this.$echarts.init(chartDom)
     chart.setOption({
       xAxis: {
+        // 展示离散的分类数据
         type: 'category',
         show: false,
+        // 不留边界空白
         boundaryGap: false
       },
       yAxis: {
