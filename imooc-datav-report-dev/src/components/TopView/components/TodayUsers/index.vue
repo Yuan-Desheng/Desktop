@@ -1,7 +1,7 @@
 <template>
   <common-card title="今日交易用户数" value="81,014">
     <template>
-      <div id="total-users-chart" :style="{ width: '100%',height: '100%'}">
+      <div id="today-users-chart" :style="{ width: '100%',height: '100%'}">
       </div>
     </template>
     <template v-slot:footer>
@@ -18,7 +18,7 @@ export default {
   name: "index",
   mixins: [CommonCardMixin],
   mounted() {
-    const chartDom = document.getElementById('total-users-chart')
+    const chartDom = document.getElementById('today-users-chart')
     const chart = this.$echarts.init(chartDom)
     chart.setOption({
       color: ['#3398DB'],
