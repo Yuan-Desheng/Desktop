@@ -53,6 +53,47 @@ export default {
           itemStyle: {
             color: '#eee'
           }
+        },
+        {
+          type: 'custom',
+          stack: '总量',
+          data: [200],
+          renderItem: (params, api) => {
+            const value = api.value(0)
+            const endPoint = api.coord([value, 0])
+            return {
+              type: 'group',
+              position: endPoint,
+              children: [
+                {
+                  type: 'path',
+                  shape: {
+                    d: 'M1024 255.996 511.971 767.909 0 255.996 1024 255.996z',
+                    x: -11,
+                    y: -23,
+                    width: 20,
+                    height: 20,
+                  },
+                  style: {
+                    fill: '#45c946'
+                  }
+                },
+                {
+                  type: 'path',
+                  shape: {
+                    d: 'M0 767.909l512.029-511.913L1024 767.909 0 767.909z',
+                    x: -11,
+                    y: 3,
+                    width: 20,
+                    height: 20,
+                  },
+                  style: {
+                    fill: '#45c946'
+                  }
+                }
+              ]
+            }
+          }
         }
       ],
       grid: {
