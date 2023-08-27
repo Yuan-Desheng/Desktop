@@ -1,10 +1,9 @@
 lockfileVersion: '6.0'
 
-settings:
-  autoInstallPeers: true
-  excludeLinksFromLockfile: false
-
 dependencies:
+  '@vue/composition-api':
+    specifier: ^1.7.2
+    version: 1.7.2(vue@2.6.14)
   core-js:
     specifier: ^3.8.3
     version: 3.8.3
@@ -14,9 +13,15 @@ dependencies:
   element-ui:
     specifier: ^2.15.13
     version: 2.15.13(vue@2.6.14)
+  v-charts:
+    specifier: ^1.19.0
+    version: 1.19.0(echarts@5.4.3)(vue@2.6.14)(zrender@4.3.2)
   vue:
     specifier: ^2.6.14
     version: 2.6.14
+  vue-echarts:
+    specifier: ^6.6.1
+    version: 6.6.1(@vue/composition-api@1.7.2)(echarts@5.4.3)(vue@2.6.14)
   vue-router:
     specifier: ^3.5.1
     version: 3.5.1(vue@2.6.14)
@@ -2108,6 +2113,14 @@ packages:
       - whiskers
     dev: true
 
+  /@vue/composition-api@1.7.2(vue@2.6.14):
+    resolution: {integrity: sha512-M8jm9J/laYrYT02665HkZ5l2fWTK4dcVg3BsDHm/pfz+MjDYwX+9FUaZyGwEyXEDonQYRCo0H7aLgdklcIELjw==}
+    peerDependencies:
+      vue: '>= 2.5 < 2.7'
+    dependencies:
+      vue: 2.6.14
+    dev: false
+
   /@vue/eslint-config-standard@6.1.0(@vue/cli-service@5.0.1)(eslint-plugin-import@2.25.3)(eslint-plugin-node@11.1.0)(eslint-plugin-promise@5.1.0)(eslint-plugin-vue@8.0.3)(eslint@7.32.0)(webpack@5.88.2):
     resolution: {integrity: sha512-9+hrEyflDzsGdlBDl9jPV5DIYUx1TOU5OSQqRDKCrNumrxRj5HRWKuk+ocXWnha6uoNRtLC24mY7d/MwqvBCNw==}
     peerDependencies:
@@ -3542,6 +3555,24 @@ packages:
     resolution: {integrity: sha512-wK2sCs4feiiJeFXn3zvY0p41mdU5VUgbgs1rNsc/y5ngFUijdWd+iIN8eoyuZHKB8xN6BL4PdWmzqFmxNg6V2w==}
     engines: {node: '>=6.0.0'}
     dev: true
+
+  /echarts-amap@1.0.0-rc.6:
+    resolution: {integrity: sha512-cYJCKoQdnkZXrGweYrveU1HruZd1c0KmsF1U8o3FtsvgR2jVL5ZUpGFjMmFtpolHOUFqxizk+s+QBLkYuOWL6Q==}
+    dev: false
+
+  /echarts-liquidfill@2.0.6(echarts@5.4.3)(zrender@4.3.2):
+    resolution: {integrity: sha512-p+AH0O9/BtwXMQQyhjJbMZo+GwRAgWG/DCyK5r27PQzpS0UWrgXu57MyEFc0A8Ub3sRuqEu08BuxwHICBkSWSQ==}
+    peerDependencies:
+      echarts: ^4.8.0
+      zrender: ^4.3.1
+    dependencies:
+      echarts: 5.4.3
+      zrender: 4.3.2
+    dev: false
+
+  /echarts-wordcloud@1.1.3:
+    resolution: {integrity: sha512-Et8D5xEAoYkidmHun+hEH+2lF9dhCt6D0JJ390vlr2r/1zwhhZAbcL01CEvG93QcMcJpSvSPK8vRiGkTbMHRxg==}
+    dev: false
 
   /echarts@5.4.3:
     resolution: {integrity: sha512-mYKxLxhzy6zyTi/FaEbJMOZU1ULGEQHaeIeuMR5L+JnJTpz+YR03mnnpBhbR4+UYJAgiXgpyTVLffPAjOTLkZA==}
@@ -5457,6 +5488,10 @@ packages:
       boolbase: 1.0.0
     dev: true
 
+  /numerify@1.2.9:
+    resolution: {integrity: sha512-X4QzQiytV5ZN3TVLhzbtFzjTarUNnaa1pgNDFqt7u7Nqhxe7FvY2eYrGt4WYHlYXDqgtfC/n/a5nJ2y0LijV8w==}
+    dev: false
+
   /object-assign@4.1.1:
     resolution: {integrity: sha512-rJgTQnkUnH1sFw8yT6VSU3zD3sWmu6sZhIseY8VX+GRu3P6F7Fu+JNDoXfklElbLJSnc3FUQHVe4cU5hj+BcUg==}
     engines: {node: '>=0.10.0'}
@@ -6310,6 +6345,10 @@ packages:
     resolution: {integrity: sha512-KigOCHcocU3XODJxsu8i/j8T9tzT4adHiecwORRQ0ZZFcp7ahwXuRU1m+yuO90C5ZUyGeGfocHDI14M3L3yDAQ==}
     dev: true
 
+  /resize-detector@0.3.0:
+    resolution: {integrity: sha512-R/tCuvuOHQ8o2boRP6vgx8hXCCy87H1eY9V5imBYeVNyNVpuL9ciReSccLj2gDcax9+2weXy3bc8Vv+NRXeEvQ==}
+    dev: false
+
   /resize-observer-polyfill@1.5.1:
     resolution: {integrity: sha512-LwZrotdHOo12nQuZlHEmtuXdqGoOD0OhaxopaNFxWzInpEgaLWoVuAMbTzixuosCx2nEG58ngzW3vxdWoxIgdg==}
     dev: false
@@ -7155,6 +7194,10 @@ packages:
     resolution: {integrity: sha512-Z0DbgELS9/L/75wZbro8xAnT50pBVFQZ+hUEueGDU5FN51YSCYM+jdxsfCiHjwNP/4LCDD0i/graKpeBnOXKRA==}
     dev: true
 
+  /utils-lite@0.1.10:
+    resolution: {integrity: sha512-jlHvdtI8MyWURF/3u+ufIjf1Cs5WjN6WZl9qO8dEkZsVjaI7X5YMUhaCFzkvB69ljt6fo4Dd7V/Oj2NJOFDFOQ==}
+    dev: false
+
   /utils-merge@1.0.1:
     resolution: {integrity: sha512-pMZTvIkT1d+TFGvDOqodOclx0QWkkgi6Tdoa8gC8ffGAAqz9pzPTZWAybbsHHoED/ztMtkv/VoYTYyShUn81hA==}
     engines: {node: '>= 0.4.0'}
@@ -7164,6 +7207,23 @@ packages:
     resolution: {integrity: sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==}
     hasBin: true
     dev: true
+
+  /v-charts@1.19.0(echarts@5.4.3)(vue@2.6.14)(zrender@4.3.2):
+    resolution: {integrity: sha512-vm2HBUmxAsXK0ivwce9LytcpqrItDA5JSPLYVxZXtiuoyhcn80XX1/3dPJd/1GqG1OYv3jfBo1s9ra4q8GowqA==}
+    peerDependencies:
+      echarts: '>3.0.0'
+      vue: '>2.0.0'
+    dependencies:
+      echarts: 5.4.3
+      echarts-amap: 1.0.0-rc.6
+      echarts-liquidfill: 2.0.6(echarts@5.4.3)(zrender@4.3.2)
+      echarts-wordcloud: 1.1.3
+      numerify: 1.2.9
+      utils-lite: 0.1.10
+      vue: 2.6.14
+    transitivePeerDependencies:
+      - zrender
+    dev: false
 
   /v8-compile-cache@2.4.0:
     resolution: {integrity: sha512-ocyWc3bAHBB/guyqJQVI5o4BZkPhznPYUG2ea80Gond/BgNWpap8TOmLSeeQG7bnh2KMISxskdADG59j7zruhw==}
@@ -7180,6 +7240,40 @@ packages:
     resolution: {integrity: sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==}
     engines: {node: '>= 0.8'}
     dev: true
+
+  /vue-demi@0.13.11(@vue/composition-api@1.7.2)(vue@2.6.14):
+    resolution: {integrity: sha512-IR8HoEEGM65YY3ZJYAjMlKygDQn25D5ajNFNoKh9RSDMQtlzCxtfQjdQgv9jjK+m3377SsJXY8ysq8kLCZL25A==}
+    engines: {node: '>=12'}
+    hasBin: true
+    requiresBuild: true
+    peerDependencies:
+      '@vue/composition-api': ^1.0.0-rc.1
+      vue: ^3.0.0-0 || ^2.6.0
+    peerDependenciesMeta:
+      '@vue/composition-api':
+        optional: true
+    dependencies:
+      '@vue/composition-api': 1.7.2(vue@2.6.14)
+      vue: 2.6.14
+    dev: false
+
+  /vue-echarts@6.6.1(@vue/composition-api@1.7.2)(echarts@5.4.3)(vue@2.6.14):
+    resolution: {integrity: sha512-EpreTzlNeJ+eaUn0AhXEmKJk98xJGecgTqAdyZovoXWnhTxnlW2HuBM0ei3y8rLw1JCUabf8/sYvxjlr8SzBKQ==}
+    requiresBuild: true
+    peerDependencies:
+      '@vue/composition-api': ^1.0.5
+      echarts: ^5.4.1
+      vue: ^2.6.12 || ^3.1.1
+    peerDependenciesMeta:
+      '@vue/composition-api':
+        optional: true
+    dependencies:
+      '@vue/composition-api': 1.7.2(vue@2.6.14)
+      echarts: 5.4.3
+      resize-detector: 0.3.0
+      vue: 2.6.14
+      vue-demi: 0.13.11(@vue/composition-api@1.7.2)(vue@2.6.14)
+    dev: false
 
   /vue-eslint-parser@8.3.0(eslint@7.32.0):
     resolution: {integrity: sha512-dzHGG3+sYwSf6zFBa0Gi9ZDshD7+ad14DGOdTLjruRVgZXe2J+DcZ9iUhyR48z5g1PqRa20yt3Njna/veLJL/g==}
@@ -7668,8 +7762,16 @@ packages:
       strip-indent: 2.0.0
     dev: true
 
+  /zrender@4.3.2:
+    resolution: {integrity: sha512-bIusJLS8c4DkIcdiK+s13HiQ/zjQQVgpNohtd8d94Y2DnJqgM1yjh/jpDb8DoL6hd7r8Awagw8e3qK/oLaWr3g==}
+    dev: false
+
   /zrender@5.4.4:
     resolution: {integrity: sha512-0VxCNJ7AGOMCWeHVyTrGzUgrK4asT4ml9PEkeGirAkKNYXYzoPJCLvmyfdoOXcjTHPs10OZVMfD1Rwg16AZyYw==}
     dependencies:
       tslib: 2.3.0
     dev: false
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
