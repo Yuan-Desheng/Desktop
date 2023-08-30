@@ -39,7 +39,7 @@
       <!--  图标和列表  -->
       <template>
         <div class="sales-view-chart-wrapper">
-          <v-chart :options="chartOption"/>
+          <v-chart :option="chartOption"/>
           <div class="sale-view-list">
             <div class="sale-view-title">排行榜</div>
             <div class="list-item-wrapper">
@@ -95,7 +95,61 @@ export default {
         ]
       },
       // 销售额图表
-      chartOption: {},
+      chartOption: {
+        title: {
+          text: '年度销售额',
+          textStyle: {
+            fontSize: 12,
+            color: '#666'
+          },
+          top: 20,
+          left: 25,
+        },
+        xAxis: {
+          type: 'category',
+          data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+          axisTick: {
+            alignWithLabel: true,
+            lineStyle: {
+              color: '#999'
+            },
+            axisLine: {
+              lineStyle: {
+                color: '#999'
+              }
+            },
+            axisLabel: {
+              color: '#333'
+            }
+          }
+        },
+        yAxis: {
+          axisLine: {
+            show: false
+          },
+          axisTick: {
+            show: false
+          },
+          splitLine: {
+            lineStyle: {
+              type: 'dashed',
+              color: '#eee'
+            }
+          }
+        },
+        series: [{
+          type: 'bar',
+          barWidth: '35%',
+          data: [200, 250, 300, 350, 300, 250, 200, 250, 300, 350, 300, 250],
+        }],
+        grid: {
+          top: 70,
+          bottom: 50,
+          left: 60,
+          right: 50
+        },
+        color: ['#3398DB']
+      },
       // 销售排行榜
       rankData: [
         {
