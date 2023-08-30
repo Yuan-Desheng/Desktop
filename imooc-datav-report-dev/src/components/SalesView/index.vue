@@ -1,6 +1,8 @@
+<!--  销售趋势组件容器  -->
 <template>
   <div class="sale-view">
-    <el-card shadow="hover">
+    <el-card shadow="hover" :body-style="{ padding: '0 0 20px 0' }">
+      <!-- 头部 -->
       <template v-slot:header>
         <div class="menu-wrapper">
           <el-menu
@@ -33,8 +35,22 @@
           </div>
         </div>
       </template>
-      <template>
 
+      <!--  图标和列表  -->
+      <template>
+        <div class="sales-view-chart-wrapper">
+          <v-chart :options="chartOption"/>
+          <div class="sale-view-list">
+            <div class="sale-view-title">排行榜</div>
+            <div class="list-item-wrapper">
+              <div class="list-item" v-for="(item, index) in rankData" :key="item.no">
+                <div :class="['list-item-no',index < 3 ? 'top-no' : '']">{{ item.no }}</div>
+                <div class="list-item-name">{{ item.name }}</div>
+                <div class="list-item-money">{{ item.money }}</div>
+              </div>
+            </div>
+          </div>
+        </div>
       </template>
     </el-card>
   </div>
@@ -77,7 +93,47 @@ export default {
             }
           }
         ]
-      }
+      },
+      // 销售额图表
+      chartOption: {},
+      // 销售排行榜
+      rankData: [
+        {
+          no: 1,
+          name: '小米',
+          money: '123',
+        },
+        {
+          no: 2,
+          name: '华为',
+          money: '123',
+        },
+        {
+          no: 3,
+          name: 'oppo',
+          money: '123',
+        },
+        {
+          no: 4,
+          name: 'vivo',
+          money: '123',
+        },
+        {
+          no: 5,
+          name: '苹果',
+          money: '123',
+        },
+        {
+          no: 6,
+          name: '摩托罗拉',
+          money: '123',
+        },
+        {
+          no: 7,
+          name: '黑莓',
+          money: '123',
+        }
+      ]
     }
   },
   methods: {
@@ -91,21 +147,24 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.sale-view{
+.sale-view {
   margin-top: 20px;
 
   .menu-wrapper {
     position: relative;
     display: flex;
+
     .sale-view-menu {
       width: 100%;
       padding-left: 20px;
+
       .el-menu-item {
         height: 50px;
         line-height: 50px;
         margin: 0 20px;
       }
     }
+
     .menu-right {
       position: absolute;
       top: 0;
@@ -114,11 +173,77 @@ export default {
       display: flex;
       justify-content: flex-end;
       align-items: center;
+
       .sale-view-date-picker {
         margin-left: 20px;
       }
     }
   }
+
+  // 销售排行榜
+  .sales-view-chart-wrapper {
+    display: flex;
+    height: 270px;
+
+    .echarts {
+      flex: 0 0 70%;
+      width: 70%;
+      height: 100%;
+    }
+
+    .sale-view-list {
+      flex: 1;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      //margin-top: 15px;
+
+      .sale-view-title {
+        margin-top: 20px;
+        font-size: 12px;
+        color: #666666;
+        font-weight: 500;
+      }
+
+      .list-item-wrapper {
+        margin-top: 15px;
+        .list-item {
+          display: flex;
+          align-items: center;
+          font-size: 12px;
+          height: 20px;
+          padding: 6px 20px 6px 0;
+
+          .list-item-no {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 20px;
+            height: 20px;
+            color: #333;
+            &.top-no {
+              background: black;
+              border-radius: 50%;
+              color: #fff;
+              font-weight: 500;
+            }
+          }
+
+          .list-item-name {
+            margin-left: 10px;
+            color: #333;
+          }
+
+          .list-item-money {
+            flex: 1;
+            text-align: right;
+          }
+
+        }
+      }
+    }
+  }
+
 }
 
 ::v-deep .el-card__header {
