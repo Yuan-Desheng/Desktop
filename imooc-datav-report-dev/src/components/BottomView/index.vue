@@ -1,28 +1,116 @@
 <template>
-  <ve-line :data="chartData"></ve-line>
+  <div class="bottom-view">
+    <!-- 关键词搜索 -->
+    <div class="view">
+      <el-card shadow="hover">
+        <template v-slot:header>
+          <div class="title-wrapper">关键词搜索</div>
+        </template>
+        <template>
+          <!-- 搜索框 -->
+          <div class="chart-wrapper">
+            <!-- 搜索用户数量 -->
+            <div class="chart">
+              <div class="chart-title">搜索用户数量</div>
+              <div class="chart-data">93,634</div>
+              <v-chart :options="searchOption"/>
+            </div>
+            <!-- 搜索量 -->
+            <div class="chart">
+              <div class="chart-title">搜索量</div>
+              <div class="chart-data">198,782</div>
+              <v-chart :options="searchNumberOption"/>
+            </div>
+          </div>
+          <!-- 搜索框 -->
+          <div class="table-wrapper">
+            <el-table :data="tableData">
+              <el-table-column/>
+            </el-table>
+            <el-pagination/>
+          </div>
+
+        </template>
+      </el-card>
+    </div>
+    <!-- 分类销售排行 -->
+    <div class="view">
+      <el-card shadow="hover">
+        <template v-slot:header>
+          <div class="title-wrapper">
+            <div class="title">分类销售排行</div>
+            <div class="radio-wrapper">
+              <el-radio-group v-model="radioSelect" size="small">
+                <el-radio-button label="品类"/>
+                <el-radio-button label="商品"/>
+              </el-radio-group>
+            </div>
+          </div>
+        </template>
+        <template>
+          <v-chart :options="categoryOptions"/>
+        </template>
+      </el-card>
+    </div>
+  </div>
 </template>
 
 <script>
 export default {
-  name: 'index',
-  data: function () {
+  data() {
     return {
-      chartData: {
-        columns: ['日期', '销售额'],
-        rows: [
-          { '日期': '1月1日', '销售额': 123 },
-          { '日期': '1月2日', '销售额': 1223 },
-          { '日期': '1月3日', '销售额': 2123 },
-          { '日期': '1月4日', '销售额': 4123 },
-          { '日期': '1月5日', '销售额': 3123 },
-          { '日期': '1月6日', '销售额': 7123 }
-        ]
-      }
+      searchOption: {},
+      searchNumberOption: {},
+      tableData: [],
+      radioSelect: '品类',
+      categoryOptions: {},
     }
   }
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 
+::v-deep .el-card__header {
+  border-bottom: none;
+  padding: 0;
+}
+
+.bottom-view {
+  display: flex;
+  margin-top: 20px;
+
+  .view {
+    flex: 1;
+    width: 50%;
+    box-sizing: border-box;
+
+    &:first-child {
+      padding: 0 10px 0 0;
+    }
+
+    &:last-child {
+      padding: 0 0 0 10px;
+    }
+
+    .title-wrapper {
+      display: flex;
+      align-items: center;
+      height: 60px;
+      box-sizing: border-box;
+      border-bottom: 1px solid #eee;
+      font-size: 14px;
+      font-weight: 500;
+      padding: 0 0 0 20px;
+
+      .radio-wrapper {
+        flex: 1;
+        display: flex;
+        justify-content: flex-end;
+        padding-right: 20px;
+      }
+
+    }
+  }
+}
 </style>
