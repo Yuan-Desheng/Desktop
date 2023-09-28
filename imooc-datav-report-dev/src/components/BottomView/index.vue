@@ -10,16 +10,18 @@
           <!-- 搜索框 -->
           <div class="chart-wrapper">
             <!-- 搜索用户数量 -->
-            <div class="chart">
-              <div class="chart-title">搜索用户数量</div>
-              <div class="chart-data">93,634</div>
-              <v-chart :options="searchOption"/>
-            </div>
-            <!-- 搜索量 -->
-            <div class="chart">
-              <div class="chart-title">搜索量</div>
-              <div class="chart-data">198,782</div>
-              <v-chart :options="searchNumberOption"/>
+            <div class="chart-inner">
+              <div class="chart">
+                <div class="chart-title">搜索用户数量</div>
+                <div class="chart-data">93,634</div>
+                <v-chart :option="searchUserOption"/>
+              </div>
+              <!-- 搜索量 -->
+              <div class="chart">
+                <div class="chart-title">搜索量</div>
+                <div class="chart-data">198,782</div>
+                <v-chart :option="searchNumberOption"/>
+              </div>
             </div>
           </div>
           <!-- 搜索框 -->
@@ -59,7 +61,35 @@
 export default {
   data() {
     return {
-      searchOption: {},
+      searchUserOption: {
+        xAxis: {
+          type: 'category',
+          boudaryGap: false
+        },
+        yAxis: {
+          show: false,
+        },
+        series: [{
+          type: 'line',
+          data: [100, 150, 200, 80, 70, 110, 130, 120, 200, 150, 80, 70, 110, 130],
+          areaStyle: {
+            color: 'rgba(95, 187, 255, 0.5)',
+          },
+          lineStyle: {
+            color: 'rgba(95, 187, 255, 1)',
+          },
+          itemStyle: {
+            opacity: 0,
+          },
+          smooth: true,
+        }],
+        grid: {
+          top: 0,
+          bottom: 0,
+          left: 0,
+          right: 0
+        }
+      },
       searchNumberOption: {},
       tableData: [],
       radioSelect: '品类',
@@ -111,6 +141,35 @@ export default {
       }
 
     }
+
+    .chart-wrapper {
+      display: flex;
+      flex-direction: column;
+      height: 452px;
+      .chart-inner {
+        display: flex;
+        padding: 0 10px;
+        margin-top: 20px;
+        .chart {
+          flex: 1;
+          padding: 0 10px;
+          .chart-title {
+            color: #999999;
+            font-size: 14px;
+          }
+          .chart-data {
+            font-size: 22px;
+            color: #333333;
+            font-weight: 500;
+            letter-spacing: 2px;
+          }
+          .echarts {
+            height: 50px;
+          }
+        }
+      }
+    }
+
   }
 }
 </style>
