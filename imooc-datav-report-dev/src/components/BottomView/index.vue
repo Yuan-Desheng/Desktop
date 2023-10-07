@@ -23,13 +23,22 @@
                 <v-chart :option="searchNumberOption"/>
               </div>
             </div>
-          </div>
-          <!-- 搜索框 -->
-          <div class="table-wrapper">
-            <el-table :data="tableData">
-              <el-table-column/>
-            </el-table>
-            <el-pagination/>
+            <!-- 搜索框 -->
+            <div class="table-wrapper">
+              <el-table :data="tableData">
+                <el-table-column prop="rank" label="排名" width="180"/>
+                <el-table-column prop="keyword" label="关键词" width="180"/>
+                <el-table-column prop="count" label="搜索次数"/>
+                <el-table-column prop="user" label="搜索用户数"/>
+              </el-table>
+              <el-pagination
+                layout="prev,pager,next"
+                :total="100"
+                :page-size="4"
+                background
+                @current-change="onPageChange"
+              />
+            </div>
           </div>
 
         </template>
@@ -91,9 +100,20 @@ export default {
         }
       },
       searchNumberOption: {},
-      tableData: [],
+      tableData: [
+        {id: 1, rank: 1, keyword: '北京', count: 100, user: 90, range: '90%'},
+        {id: 2, rank: 1, keyword: '北京', count: 100, user: 90, range: '90%'},
+        {id: 3, rank: 1, keyword: '北京', count: 100, user: 90, range: '90%'},
+        {id: 4, rank: 1, keyword: '北京', count: 100, user: 90, range: '90%'},
+        {id: 5, rank: 1, keyword: '北京', count: 100, user: 90, range: '90%'},
+      ],
       radioSelect: '品类',
       categoryOptions: {},
+    }
+  },
+  methods: {
+    onPageChange(page) {
+      console.log(page);
     }
   }
 }
@@ -146,26 +166,42 @@ export default {
       display: flex;
       flex-direction: column;
       height: 452px;
+
       .chart-inner {
         display: flex;
         padding: 0 10px;
         margin-top: 20px;
+
         .chart {
           flex: 1;
           padding: 0 10px;
+
           .chart-title {
             color: #999999;
             font-size: 14px;
           }
+
           .chart-data {
             font-size: 22px;
             color: #333333;
             font-weight: 500;
             letter-spacing: 2px;
           }
+
           .echarts {
             height: 50px;
           }
+        }
+      }
+
+      .table-wrapper {
+        flex: 1;
+        margin-top: 20px;
+        padding: 0 20px 20px;
+        .el-pagination {
+          display: flex;
+          justify-content: flex-end;
+          margin-top: 15px;
         }
       }
     }
