@@ -59,7 +59,9 @@
           </div>
         </template>
         <template>
-          <v-chart :options="categoryOptions"/>
+          <div class="chart-wrapper">
+            <v-chart :option="categoryOptions"/>
+          </div>
         </template>
       </el-card>
     </div>
@@ -114,8 +116,45 @@ export default {
   methods: {
     onPageChange(page) {
       console.log(page);
+    },
+    renderPieChart() {
+      const mockData = [
+        {
+          legendname: '粉面粥店',
+          value: 67,
+          percent: '15.40%',
+        },
+        {
+          legendname: '简易便当',
+          value: 97,
+          percent: '22.30%',
+        },
+        {
+          legendname: '汉堡披萨',
+          value: 92,
+          percent: '21.15%',
+        },
+      ];
+      this.categoryOptions = {
+        title: [{
+          text: '品类分布',
+          textStyle: {
+            fontSize: 14,
+            color: '#666'
+          },
+          left: 20,
+          top: 20,
+        }],
+        series: [{
+          type: 'pie',
+          data: mockData,
+        }]
+      }
     }
-  }
+  },
+  mounted() {
+    this.renderPieChart();
+  },
 }
 </script>
 
@@ -134,7 +173,6 @@ export default {
     flex: 1;
     width: 50%;
     box-sizing: border-box;
-
     &:first-child {
       padding: 0 10px 0 0;
     }
