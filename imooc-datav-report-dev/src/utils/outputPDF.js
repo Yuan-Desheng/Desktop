@@ -1,6 +1,6 @@
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
-import { message } from 'ant-design-vue';
+import { Message } from 'element-ui';
 const A4_WIDTH = 592.28;
 const A4_HEIGHT = 841.89;
 // 将元素转化为canvas元素
@@ -85,7 +85,7 @@ export async function outputPDF({ element, contentWidth = 550,
   // 页眉元素 经过转换后在PDF的高度
   const { height: theaderHeight } = await toCanvas(header, contentWidth);
 
-  // 距离PDF左边的距离，/ 2 表示居中 
+  // 距离PDF左边的距离，/ 2 表示居中
   const baseX = (A4_WIDTH - contentWidth) / 2;        // 预留空间给左边
   // 距离PDF 页眉和页脚的间距， 留白留空
   const baseY = 15;
@@ -125,6 +125,8 @@ export async function outputPDF({ element, contentWidth = 550,
       const isDivideInside = one.classList && one.classList.contains('divide-inside');
       // 图片元素不需要继续深入，作为深度终点
       const isIMG = one.tagName === 'IMG';
+      // x-vue-echarts元素不需要继续深入，作为深度终点
+      const XVUEECHARTS = one.tagName === 'X-VUE-ECHARTS';
       // table的每一行元素也是深度终点
       const isTableCol = one.classList && ((one.classList.contains('ant-table-row')));
       // 特殊的富文本元素
@@ -146,7 +148,8 @@ export async function outputPDF({ element, contentWidth = 550,
         traversingNodes(one.childNodes);
       }
       // 对于深度终点元素进行处理
-      else if (isTableCol || isIMG) {
+      else if (isTableCol || isIMG || XVUEECHARTS) {
+        console.log(one.tagName,"one.tagName")
         // dom高度转换成生成pdf的实际高度
         // 代码不考虑dom定位、边距、边框等因素，需在dom里自行考虑，如将box-sizing设置为border-box
         updatePos(rate * offsetHeight, top, one);
@@ -181,7 +184,7 @@ export async function outputPDF({ element, contentWidth = 550,
   }
 
   // 普通元素更新位置的方法
-  // 普通元素只需要考虑到是否到达了分页点，即当前距离顶部高度 - 上一个分页点的高度 大于 正常一页的高度，则需要载入分页点 
+  // 普通元素只需要考虑到是否到达了分页点，即当前距离顶部高度 - 上一个分页点的高度 大于 正常一页的高度，则需要载入分页点
   function updateNomalElPos(top) {
     if (top - (pages.length > 0 ? pages[pages.length - 1] : 0) > originalPageHeight) {
       pages.push((pages.length > 0 ? pages[pages.length - 1] : 0) + originalPageHeight);
@@ -215,7 +218,7 @@ export async function outputPDF({ element, contentWidth = 550,
 
   // 根据分页位置 开始分页
   for (let i = 0; i < pages.length; ++i) {
-    message.success(`共${pages.length}页， 生成第${i + 1}页`)
+    Message.success(`共${pages.length}页， 生成第${i + 1}页`)
     // 根据分页位置新增图片
     addImage(baseX, baseY + theaderHeight - pages[i], pdf, data, width, height);
     // 将 内容 与 页眉之间留空留白的部分进行遮白处理
@@ -233,7 +236,7 @@ export async function outputPDF({ element, contentWidth = 550,
     await addHeader(header, pdf, A4_WIDTH)
     // 添加页脚
     await addFooter(pages.length, i + 1, footer, pdf, A4_WIDTH);
-    
+
     // 若不是最后一页，则分页
     if (i !== pages.length - 1) {
       // 增加分页
