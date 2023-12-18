@@ -123,6 +123,8 @@ export async function outputPDF({ element, contentWidth = 550,
       const one = nodes[i];
       // 需要判断跨页且内部存在跨页的元素
       const isDivideInside = one.classList && one.classList.contains('divide-inside');
+      console.log(one.tagName,"one.tagName")
+      const isDIV = one.tagName === 'DIV';
       // 图片元素不需要继续深入，作为深度终点
       const isIMG = one.tagName === 'IMG';
       // x-vue-echarts元素不需要继续深入，作为深度终点
@@ -148,8 +150,10 @@ export async function outputPDF({ element, contentWidth = 550,
         traversingNodes(one.childNodes);
       }
       // 对于深度终点元素进行处理
-      else if (isTableCol || isIMG || XVUEECHARTS) {
-        console.log(one.tagName,"one.tagName")
+      else if (isTableCol || isIMG || XVUEECHARTS || isDIV) {
+        console.log(one.tagName,"深度终点元素进行处理")
+        console.log(one,"one深度终点元素进行处理")
+        console.log(one.classList,"one.classList深度终点元素进行处理")
         // dom高度转换成生成pdf的实际高度
         // 代码不考虑dom定位、边距、边框等因素，需在dom里自行考虑，如将box-sizing设置为border-box
         updatePos(rate * offsetHeight, top, one);
