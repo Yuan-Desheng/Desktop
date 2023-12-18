@@ -123,6 +123,8 @@ export async function outputPDF({ element, contentWidth = 550,
       const one = nodes[i];
       // 需要判断跨页且内部存在跨页的元素
       const isDivideInside = one.classList && one.classList.contains('divide-inside');
+      // 需要判断跨页且内部存在主动跨页的元素
+      const isPageSkip = one.classList && one.classList.contains('page-skip');
       console.log(one.tagName, "one.tagName");
       const isDescriptionsEcharts = one.classList && one.classList.contains('descriptions-echarts');
       // const isDIV = one.tagName === 'DIV';
@@ -142,6 +144,14 @@ export async function outputPDF({ element, contentWidth = 550,
       // dom转换后距离顶部的高度
       // 转换成canvas高度
       const top = rate * (offsetTop)
+
+      // 主动分页
+      if(isPageSkip) {
+        // 执行位置更新操作
+        updateSkipPos(rate * offsetHeight, top, one);
+        // 执行深度遍历操作
+        traversingNodes(one.childNodes);
+      }
 
       // 对于需要进行分页且内部存在需要分页（即不属于深度终点）的元素进行处理
       if (isDivideInside) {
@@ -208,9 +218,16 @@ export async function outputPDF({ element, contentWidth = 550,
     }
     // 若 距离当前页顶部的高度 加上元素自身的高度 大于 一页内容的高度, 则证明元素跨页，将当前高度作为分页位置
     else if ((top + eheight - (pages.length > 0 ? pages[pages.length - 1] : 0) > originalPageHeight) && (top != (pages.length > 0 ? pages[pages.length - 1] : 0))) {
+      // 减去按钮的高度
       pages.push(top-39);
       console.log(pages,"pages22222222222222")
     }
+  }
+  
+  // 主动跨页
+  function updateSkipPos(eheight, top) {
+    // 减去按钮的高度，元素后面断页
+    pages.push(top - 39 + eheight);
   }
 
   // 深度遍历节点的方法

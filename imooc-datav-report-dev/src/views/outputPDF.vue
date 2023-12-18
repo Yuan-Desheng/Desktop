@@ -4,7 +4,7 @@
     <div class="ctn">
       <div class="pdf-ctn">
         <div class="pdf-panel">
-          <el-descriptions title="自定义样式列表" :column="1" border v-for="item in 3" :key="item">
+          <el-descriptions title="自定义样式列表" :column="1" border v-for="item in 3" :key="item" class="page-skip">
             <el-descriptions-item label="S/N" :labelStyle="{'text-align': 'center'}" :contentStyle="{'text-align': 'center'}">M2000001</el-descriptions-item>
             <el-descriptions-item label="型号" :labelStyle="{'text-align': 'center'}" :contentStyle="{'text-align': 'center'}">M2000001</el-descriptions-item>
             <el-descriptions-item label="现场使用环境" :labelStyle="{'text-align': 'center'}" :contentStyle="{'text-align': 'center'}"></el-descriptions-item>
@@ -43,7 +43,7 @@
             </el-descriptions-item>
           </el-descriptions>
     <!--      <ImageComponent v-for="(item,index) in 3" :key="index + 6"></ImageComponent>-->
-          <div class="descriptions-echarts">
+          <div class="descriptions-echarts page-skip">
             <total-orders style="width: 100%"></total-orders>
           </div>
           <div class="descriptions-echarts">
