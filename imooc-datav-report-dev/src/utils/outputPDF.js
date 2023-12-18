@@ -123,14 +123,15 @@ export async function outputPDF({ element, contentWidth = 550,
       const one = nodes[i];
       // 需要判断跨页且内部存在跨页的元素
       const isDivideInside = one.classList && one.classList.contains('divide-inside');
-      console.log(one.tagName,"one.tagName")
-      const isDIV = one.tagName === 'DIV';
+      console.log(one.tagName, "one.tagName");
+      const isDescriptionsEcharts = one.classList && one.classList.contains('descriptions-echarts');
+      // const isDIV = one.tagName === 'DIV';
       // 图片元素不需要继续深入，作为深度终点
-      const isIMG = one.tagName === 'IMG';
+      // const isIMG = one.tagName === 'IMG';
       // x-vue-echarts元素不需要继续深入，作为深度终点
       const XVUEECHARTS = one.tagName === 'X-VUE-ECHARTS';
       // table的每一行元素也是深度终点
-      const isTableCol = one.classList && ((one.classList.contains('ant-table-row')));
+      // const isTableCol = one.classList && ((one.classList.contains('ant-table-row')));
       // 特殊的富文本元素
       const isEditor = one.classList && (one.classList.contains('editor'));
       // 对需要处理分页的元素，计算是否跨界，若跨界，则直接将顶部位置作为分页位置，进行分页，且子元素不需要再进行判断
@@ -150,7 +151,7 @@ export async function outputPDF({ element, contentWidth = 550,
         traversingNodes(one.childNodes);
       }
       // 对于深度终点元素进行处理
-      else if (isTableCol || isIMG || XVUEECHARTS || isDIV) {
+      else if (isDescriptionsEcharts) {
         console.log(one.tagName,"深度终点元素进行处理")
         console.log(one,"one深度终点元素进行处理")
         console.log(one.classList,"one.classList深度终点元素进行处理")
@@ -203,10 +204,12 @@ export async function outputPDF({ element, contentWidth = 550,
     // 如果高度已经超过当前页，则证明可以分页了
     if (top - (pages.length > 0 ? pages[pages.length - 1] : 0) >= originalPageHeight) {
       pages.push((pages.length > 0 ? pages[pages.length - 1] : 0) + originalPageHeight);
+      console.log(pages,"pages111111111111111")
     }
     // 若 距离当前页顶部的高度 加上元素自身的高度 大于 一页内容的高度, 则证明元素跨页，将当前高度作为分页位置
     else if ((top + eheight - (pages.length > 0 ? pages[pages.length - 1] : 0) > originalPageHeight) && (top != (pages.length > 0 ? pages[pages.length - 1] : 0))) {
-      pages.push(top);
+      pages.push(top-39);
+      console.log(pages,"pages22222222222222")
     }
   }
 
