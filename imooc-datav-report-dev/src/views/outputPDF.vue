@@ -1,13 +1,52 @@
 <template>
-    <div v-loading="loading">
-		<button @click="handleOutput()">导出</button>
-        <div class="ctn">
+    <div class="outputpdf-body" v-loading="loading">
+			<div class="ctn">
             <div class="pdf-ctn">
                 <div class="pdf-panel">
+					<!--	首页	-->
+					<div class="a4main" style="page-break-after:always;">>
+						<div class="title">SEW智能监测系统</div>
+						<div class="title">设备运行报告</div>
+						<div class="table">
+							<div class="tr">
+								<div class="td">企业名称</div>
+								<div class="td" id="companyName"></div>
+							</div>
+							<div class="tr">
+								<div class="td">运行周期</div>
+								<div class="td" id="runCycle"></div>
+							</div>
+							<div class="tr">
+								<div class="td">报告</div>
+								<div class="td" id="a4Report"></div>
+							</div>
+							<div class="tr">
+								<div class="td">日期</div>
+								<div class="td" id="a4Date"></div>
+							</div>
+						</div>
+					</div>
+					<!--	声明页面	-->
+					<div class="statement" style="page-break-after:always;">>
+						<div class="title">
+							声明
+						</div>
+						<div class="content">
+							本报告由SEW-传动设备（天津）有限公司提供，版权归SEW所有，未经SEW书面许可，请勿将本报告提供 给任何第三方或发布于公共信息平台。报告中所有结论基于贵我双方确认的参数及运行工况（详见“监测设 备运行参数”）给出，如数据与实际存在偏差，或工况发生变化，将影响本监测报告的准确性。本报告结论 仅供参考，不作为决策依据。如有任何疑问请及时与SEW联系。
+						</div>
+						<div class="title title2">
+							STATEMENT
+						</div>
+						<div class="content content2">
+							This report is provided by SEW-EURODRIVE (Tianjin) Co., Ltd., and the copyright belongs to SEW-EURODRIVE. Please do not provide the report to third party or publish it on public information platform without
+							written permission. All conclusions in the report are based on parameters and operating conditions mutually confirmed (refer to “Operating parameters of the monitored equipment” for details). If the data deviates from the actual conditions or the operating condition changes, it will affect the accuracy of the report. The conclusions of this report is only for reference and shall not be deemed as decision basis.Please contact SEW-EURODRIVE if you have any questions.
+						</div>
+					</div>
+					
                     <!-- 设备信息汇总 -->
-                    <div id="deviceInfos" class="page-skip allInfo">
+                    <div id="deviceInfos" class="allInfo" style="page-break-after:always;">>
                         <h3 style="color: black">一.设备信息汇总</h3>
-                        <table v-for="(item,index) in runningReportData.deviceInfos" :key="item.id">
+                        <table class="deviceInfos-table" v-for="(item,index) in runningReportData.deviceInfos" :key="item.id">
                             <thead>
                             <tr>
                                 <th colspan="2" style="font-weight: 500;">{{ index+"-"+item.name+"-"+item.faultLevel }}</th>
@@ -49,33 +88,37 @@
                             </tbody>
                         </table>
                     </div>
-                    <div id="detection" class="page-skip">
+
+					<!-- 分页 -->
+					<div class="page-skip"></div>
+
+					<!-- 设备监测详情 -->
+					<div id="detection" style="page-break-after:always;">>
 						<h3 style="color: black">二.设备监测详情</h3>
-						<!-- 设备监测详情表格 -->
 						<div class="detection" v-for="(item,index) in runningReportData.monitorDetails" :key="item.deviceId">
 							<table :key="item.deviceId">
 								<thead>
-									<tr>
+									<tr class="detection-tr">
 										<th colspan="2">{{ index + 1 +". "+item.deviceName }}</th>
 									</tr>
 								</thead>
 								<tbody>
 									<template v-for="(e, i) in item.monitors">
 										<template v-for="(m, n) in e.series">
-											<tr>
+											<tr class="detection-tr">
 												<td class="tdTit">{{ m.monitorName }}</td>
 											</tr>
-											<tr>
+											<tr class="detection-tr">
 												<td class="tdTit">
-													<div class="itemEcharts descriptions-echarts" :ref="'monit' + index + i + n"></div>
+													<div class="itemEcharts descriptions-echarts" :ref="'monit' + index + i + n" style="page-break-inside: avoid;"></div>
 												</td>
 											</tr>
 										</template>
 									</template>
-									<tr>
+									<tr class="detection-tr">
 										<td class="tdTit">润滑油时间</td>
 									</tr>
-									<tr>
+									<tr class="detection-tr">
 										<td>
 											<div class="itemTxt">
 												<div class="txtItem">最新换油时间: {{ item.oilTime.nowTime }}</div>
@@ -89,10 +132,14 @@
 							</table>
 						</div>
 					</div>
-                    <div id="historical">
+
+					<!-- 分页 -->
+					<div class="page-skip"></div>
+
+					<!-- 历史报警信息 -->
+					<div id="historical" style="page-break-after:always;">>
 						<h3 style="color: black">三.历史报警信息</h3>
-						<!-- 历史报警信息表格 -->
-						<div class="historical" v-for="(item,index) in runningReportData.historicalAlarmInfo" :key="item.id">
+						<div class="historical historical-table-div" v-for="(item,index) in runningReportData.historicalAlarmInfo" :key="item.id">
 							<table :key="item.id">
 								<thead>
 									<tr>
@@ -126,7 +173,7 @@
 									</tr>
 									<tr>
 										<td class="tdTit">
-											<div class="itemEcharts descriptions-echarts" :ref="'history' + index"></div>
+											<div class="itemEcharts descriptions-echarts" :ref="'history' + index" style="page-break-inside: avoid;"></div>
 										</td>
 									</tr>
 								</tbody>
@@ -136,35 +183,33 @@
                 </div>
             </div>
         </div>
-        <div class="pdf-header"
-             style="
-                font-weight: bold;
-                padding:15px 8px;
-                width: 100%;
-                border-bottom: 1px solid rgba(0, 0, 0, 0.85);
-                color: rgba(0, 0, 0, 0.85);
-                position: fixed;
-                top: -100vh;
-                display: flex;
-                justify-content: space-between;
-             ">
-            <h1 style="font-size: 42px;display: flex; justify-content: center; align-items: end;transform: translate(2%, 80%);">
-                SEW 智能监测系统设备运行报告
-            </h1>
-            <div style="display: flex; justify-content: center; align-items: end;transform: translate(0%, 10%);">
-                Page : <div class="pdf-footer-page"></div> / <div class="pdf-footer-page-count"></div>
-                <img :src="sewpng" style="width: 202px;height: 90px;"></img>
-            </div>
-        </div>
-        <div class="pdf-footer"
-             style="font-weight: bold; padding: 15px 8px; width: 100%; border-top: 1px solid rgba(0, 0, 0, 0.85); position: fixed; top: -100vh;">
-            <div style="display: flex; justify-content: center; align-items: center; padding-top: 5px;">
-                我是页尾
-            </div>
-            <div style="display: flex; justify-content: center; align-items: center; margin-top: 20px;">
-                第<div class="pdf-footer-page"></div>页 / 第<div class="pdf-footer-page-count"></div>页
-            </div>
-        </div>
+		<!-- 工具栏 -->
+		<div class="navigation">
+			<el-button type="primary" @click="handleOutput" v-loading="handleOutputLoading">下 载</el-button>
+		</div>
+		<!-- 页眉 -->
+		<div class="pdf-header"
+					style="position: fixed; top: -100vh;">
+			<div class="headerCon">
+				<h1 class="headerTitle">
+					SEW 智能监测系统设备运行报告
+				</h1>
+				<img class="sewpng" :src="sewpng" style="width: 10.52vw;height: 4.687vw;"></img>
+			</div>
+			<div class="pageNum">
+				Page : <div class="pdf-footer-page">2</div> / <div class="pdf-footer-page-count"></div>
+			</div>
+		</div>
+		<!-- 页脚 -->
+		<div class="pdf-footer"
+			style="font-weight: bold; padding: 15px 8px; width: 100%; border-top: 1px solid rgba(0, 0, 0, 0.85); position: fixed; top: -100vh;">
+			<div style="display: flex; justify-content: center; align-items: center; padding-top: 5px;">
+				我是页尾
+			</div>
+			<div style="display: flex; justify-content: center; align-items: center; margin-top: 20px;">
+				第<div class="pdf-footer-page"></div>页 / 第<div class="pdf-footer-page-count"></div>页
+			</div>
+		</div>
     </div>
 </template>
 
@@ -175,183 +220,193 @@ import * as echarts from 'echarts';
 
 export default {
 	name: "outputPDF",
-	props: {
-		runningReportParams: {
-			type: Object,
-			default: () => {
-			}
-		}
-	},
+	// props: {
+	// 	runningReportParams: {
+	// 		type: Object,
+	// 		default: () => {
+	// 		}
+	// 	}
+	// },
 	data() {
 		return {
 		  loading: true,
+			handleOutputLoading: false,
 		  runningReportData: null,
       sewpng: sewpng,
 		}
 	},
 	created() {
-	  this.getRunningReportData(this.runningReportParams);
-		console.log(this.runningReportParams, "runningReportParams");
+		// console.log(this.runningReportParams, "runningReportParams");
+		console.log(this.$route.query, "this.$route.query");
+		this.getRunningReportData(this.$route.query);
 	},
-	updated() {
-		var refsArr = [];
-		for(let index = 0; index < this.runningReportData.monitorDetails.length; index++) {
-			for(let i = 0; i < this.runningReportData.monitorDetails[index].monitors.length; i++) {
-				for(let n = 0; n < this.runningReportData.monitorDetails[index].monitors[i].series.length; n++) {
-					refsArr[ 'monit' + index + i + n ] = echarts.init(this.$refs['monit' + index + i + n][0]);
-					refsArr[ 'monit' + index + i + n ].setOption({
-						legend: {
-							// Try 'horizontal'
-							orient: 'vertical',
-							right: 0,
-							// icon: 'path://M 0 50 h 10',
-    						data: [ this.runningReportData.monitorDetails[index].monitors[i].series[n].name ]
-						},
-						grid: {
-							x: 80,
-							y: 30,
-							x2: 30,
-							y2: 30
-						},
-						xAxis: {
-							type: 'category',
-							data: this.runningReportData.monitorDetails[index].monitors[i].times
-						},
-						yAxis: {
-							type: 'value'
-						},
-						series: [
-							{
-								name: this.runningReportData.monitorDetails[index].monitors[i].series[n].name,
-								data: this.runningReportData.monitorDetails[index].monitors[i].series[n].data,
-								type: 'line',
-								showSymbol: 'false',
-								symbolSize: 0,
-								lineStyle: {
-									normal: {
-										color: 'green'
-									}
-								}
-							}
-						]
-					});
-				}
-			}
-		}
-		for(let index = 0; index < this.runningReportData.historicalAlarmInfo.length; index++) {
-			refsArr[ 'history' + index ] = echarts.init(this.$refs['history' + index][0]);
-			var timestamps = this.runningReportData.historicalAlarmInfo[index].monitorValues.data.map(item => item.timestamp);
-			var values = this.runningReportData.historicalAlarmInfo[index].monitorValues.data.map(item => item.value);
-			refsArr[ 'history' + index ].setOption({
-				grid: {
-					x: 80,
-					y: 30,
-					x2: 80,
-					y2: 30
-				},
-				xAxis: {
-					type: 'category',
-					boundaryGap: false,
-					data: timestamps
-				},
-				yAxis: {
-					type: 'value'
-				},
-				series: [
-					{
-						data: values,
-						type: 'line',
-						showSymbol: 'false',
-						symbolSize: 0,
-					},
-					{
-						type: 'custom',
-						renderItem: (param, api)=>{
-							let bandWidth = api.size([0, 0])[0] * (timestamps.length); // data为总数据量
-							let itemWidth = api.size([0, 0])[0]
-							let point = api.coord([api.value(0), api.value(1)]);
-							return {
-								type: 'line',
-								transition: ['shape'],
-								shape: {
-									x1: point[0] - itemWidth*0.5,
-									x2: point[0] + bandWidth - itemWidth*0.5,
-									y1: point[1],
-									y2: point[1]
-								},
-								style: api.style({ // 直线配置
-									fill: null,
-									stroke: api.visual('color'),
-									lineWidth: 2 // 线宽
-								})
-							};
-						},
-						encode: {
-							x: 0,
-							y: 1
-						},
-						color: 'red',
-						data: [this.runningReportData.historicalAlarmInfo[index].monitorValues.alarmValue],
-						label: {
-							show: false,
-						},
-					},
-					{
-						type: 'custom',
-						renderItem: (param, api)=>{
-							let bandWidth = api.size([0, 0])[0] * (timestamps.length); // data为总数据量
-							let itemWidth = api.size([0, 0])[0]
-							let point = api.coord([api.value(0), api.value(1)]);
-							return {
-								type: 'line',
-								transition: ['shape'],
-								shape: {
-									x1: point[0] - itemWidth*0.5,
-									x2: point[0] + bandWidth - itemWidth*0.5,
-									y1: point[1],
-									y2: point[1]
-								},
-								style: api.style({ // 直线配置
-									fill: null,
-									stroke: api.visual('color'),
-									lineWidth: 2 // 线宽
-								})
-							};
-						},
-						encode: {
-							x: 0,
-							y: 1
-						},
-						color: '#ffea00',
-						data: [this.runningReportData.historicalAlarmInfo[index].monitorValues.earlyWarningValue],
-						label: {
-							show: false,
-						},
-					},
-				],
-				markLine: {
-					symbol: ['none', 'none'],//去掉箭头
-					itemStyle: {
-						normal: { 
-							lineStyle: {
-								color: ['red', 'yellow']
-							},
-							label: {
-								show: false
-							}
-						}
-					},
-					data: [
-						{
-							yAxis: this.runningReportData.historicalAlarmInfo[index].monitorValues.alarmValue,
-						},
-						{
-							yAxis: this.runningReportData.historicalAlarmInfo[index].monitorValues.earlyWarningValue
-						}
-					]
-				}
-			})
-		}
+	mounted() {
+        console.log(111111111111111111111)
+        this.$nextTick(() => {
+            const a4main = document.querySelector('.a4main');
+            a4main.querySelector('#companyName').innerText = this.runningReportData.deptName;
+            a4main.querySelector('#runCycle').innerText = this.runningReportData.periodic;
+            a4main.querySelector('#a4Report').innerText = this.runningReportData.userName;
+            a4main.querySelector('#a4Date').innerText = this.runningReportData.date;
+            var refsArr = [];
+            for(let index = 0; index < this.runningReportData.monitorDetails.length; index++) {
+                for(let i = 0; i < this.runningReportData.monitorDetails[index].monitors.length; i++) {
+                    for(let n = 0; n < this.runningReportData.monitorDetails[index].monitors[i].series.length; n++) {
+                        refsArr[ 'monit' + index + i + n ] = echarts.init(this.$refs['monit' + index + i + n][0]);
+                        refsArr[ 'monit' + index + i + n ].setOption({
+                            legend: {
+                                // Try 'horizontal'
+                                orient: 'vertical',
+                                right: 0,
+                                // icon: 'path://M 0 50 h 10',
+                                data: [ this.runningReportData.monitorDetails[index].monitors[i].series[n].name ]
+                            },
+                            grid: {
+                                x: 80,
+                                y: 30,
+                                x2: 30,
+                                y2: 30
+                            },
+                            xAxis: {
+                                type: 'category',
+                                data: this.runningReportData.monitorDetails[index].monitors[i].times
+                            },
+                            yAxis: {
+                                type: 'value'
+                            },
+                            series: [
+                                {
+                                    name: this.runningReportData.monitorDetails[index].monitors[i].series[n].name,
+                                    data: this.runningReportData.monitorDetails[index].monitors[i].series[n].data,
+                                    type: 'line',
+                                    showSymbol: 'false',
+                                    symbolSize: 0,
+                                    lineStyle: {
+                                        normal: {
+                                            color: 'green'
+                                        }
+                                    }
+                                }
+                            ]
+                        });
+                    }
+                }
+            }
+            for(let index = 0; index < this.runningReportData.historicalAlarmInfo.length; index++) {
+                refsArr[ 'history' + index ] = echarts.init(this.$refs['history' + index][0]);
+                var timestamps = this.runningReportData.historicalAlarmInfo[index].monitorValues.data.map(item => item.timestamp);
+                var values = this.runningReportData.historicalAlarmInfo[index].monitorValues.data.map(item => item.value);
+                refsArr[ 'history' + index ].setOption({
+                    grid: {
+                        x: 80,
+                        y: 30,
+                        x2: 80,
+                        y2: 30
+                    },
+                    xAxis: {
+                        type: 'category',
+                        boundaryGap: false,
+                        data: timestamps
+                    },
+                    yAxis: {
+                        type: 'value'
+                    },
+                    series: [
+                        {
+                            data: values,
+                            type: 'line',
+                            showSymbol: 'false',
+                            symbolSize: 0,
+                        },
+                        {
+                            type: 'custom',
+                            renderItem: (param, api)=>{
+                                let bandWidth = api.size([0, 0])[0] * (timestamps.length); // data为总数据量
+                                let itemWidth = api.size([0, 0])[0]
+                                let point = api.coord([api.value(0), api.value(1)]);
+                                return {
+                                    type: 'line',
+                                    transition: ['shape'],
+                                    shape: {
+                                        x1: point[0] - itemWidth*0.5,
+                                        x2: point[0] + bandWidth - itemWidth*0.5,
+                                        y1: point[1],
+                                        y2: point[1]
+                                    },
+                                    style: api.style({ // 直线配置
+                                        fill: null,
+                                        stroke: api.visual('color'),
+                                        lineWidth: 2 // 线宽
+                                    })
+                                };
+                            },
+                            encode: {
+                                x: 0,
+                                y: 1
+                            },
+                            color: 'red',
+                            data: [this.runningReportData.historicalAlarmInfo[index].monitorValues.alarmValue],
+                            label: {
+                                show: false,
+                            },
+                        },
+                        {
+                            type: 'custom',
+                            renderItem: (param, api)=>{
+                                let bandWidth = api.size([0, 0])[0] * (timestamps.length); // data为总数据量
+                                let itemWidth = api.size([0, 0])[0]
+                                let point = api.coord([api.value(0), api.value(1)]);
+                                return {
+                                    type: 'line',
+                                    transition: ['shape'],
+                                    shape: {
+                                        x1: point[0] - itemWidth*0.5,
+                                        x2: point[0] + bandWidth - itemWidth*0.5,
+                                        y1: point[1],
+                                        y2: point[1]
+                                    },
+                                    style: api.style({ // 直线配置
+                                        fill: null,
+                                        stroke: api.visual('color'),
+                                        lineWidth: 2 // 线宽
+                                    })
+                                };
+                            },
+                            encode: {
+                                x: 0,
+                                y: 1
+                            },
+                            color: '#ffea00',
+                            data: [this.runningReportData.historicalAlarmInfo[index].monitorValues.earlyWarningValue],
+                            label: {
+                                show: false,
+                            },
+                        },
+                    ],
+                    markLine: {
+                        symbol: ['none', 'none'],//去掉箭头
+                        itemStyle: {
+                            normal: {
+                                lineStyle: {
+                                    color: ['red', 'yellow']
+                                },
+                                label: {
+                                    show: false
+                                }
+                            }
+                        },
+                        data: [
+                            {
+                                yAxis: this.runningReportData.historicalAlarmInfo[index].monitorValues.alarmValue,
+                            },
+                            {
+                                yAxis: this.runningReportData.historicalAlarmInfo[index].monitorValues.earlyWarningValue
+                            }
+                        ]
+                    }
+                })
+            }
+        })
 	},
     methods: {
       // 获取运行报告数据
@@ -3699,23 +3754,46 @@ export default {
       },
       // 打印下载
       async handleOutput() {
-        const element = document.querySelector('.pdf-panel');
-        const header = document.querySelector('.pdf-header');
-        const footer = document.querySelector('.pdf-footer');
-        try {
-          new outputPDF(
-            element,
-			{
-				footer: footer,
-				header: header,
-				contentWidth: 560
-			}
-          ).getPdf()
-        } catch (error) {
-          console.log(error,"error")
-          // message.error(typeof error === 'string' ? error : JSON.stringify(error))
-        }
-
+        // let oldStr = window.document.body.innerHTML; // 获取body的内容
+        // let newStr = document.querySelector(".pdf-panel").innerHTML;
+        // window.document.body.innerHTML = newStr; // 把需要打印的指定内容赋给body
+        window.print(); // 调用浏览器的打印功能打印指定区域
+        // window.document.body.innerHTML = oldStr; // body替换为原来的内容
+		// 		// 下载提示
+		// 		this.handleOutputLoading = true;
+		// 		this.option = this.$message({
+		// 			message: "正在下载中，请勿重复点击",
+		// 			type: "warning",
+		// 			duration:0,
+		// 		});
+        // const element = document.querySelector('.pdf-panel');
+        // const header = document.querySelector('.pdf-header');
+        // const footer = document.querySelector('.pdf-footer');
+        // const a4main = document.querySelector('.a4main');
+        // const statement = document.querySelector('.statement');
+  		// a4main.querySelector('#companyName').innerText = this.runningReportData.deptName;
+  		// a4main.querySelector('#runCycle').innerText = this.runningReportData.periodic;
+  		// a4main.querySelector('#a4Report').innerText = this.runningReportData.userName;
+  		// a4main.querySelector('#a4Date').innerText = this.runningReportData.date;
+        // try {
+        //   await outputPDF({
+        //     element: element,
+        //     footer: footer,
+        //     header: header,
+		// 				a4main: a4main,
+		// 				statement: statement,
+        //     contentWidth: 560
+        //   })
+		// 			// 成功的消息提示
+		// 			this.option ? this.option.close():'';
+		// 			this.$message.success(`下载成功`)
+		// 			this.handleOutputLoading = false;
+        // } catch (error) {
+		// 			this.option ? this.option.close():'';
+		// 			this.handleOutputLoading = false;
+        //   console.log(error,"error")
+        //   // message.error(typeof error === 'string' ? error : JSON.stringify(error))
+        // }
       }
     }
 
@@ -3723,22 +3801,53 @@ export default {
 </script>
 
 <style scoped  lang="scss">
+@media print {
+  @page {
+    margin: 0;
+    /* 纵向 */
+    size: portrait; 
+    /* 边距 上右下左 */
+    margin: 1cm 2cm 1cm 2cm;
+  }
+  body {
+    margin: 1cm;
+  }
+}
+
 * {
 	box-sizing: border-box;
+	font-family: "宋体","微软雅黑","黑体";
 }
 
 .outputpdf-body{
+	//margin: 50px;
+	height: 100%;
+}
+
+.navigation {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	width: 98%;
+	height: 10vh;
+	background-color: #fff;
+	//box-shadow:0 0 6px rgba(0, 0, 0, .04)
 }
 
 .ctn {
-  .pdf-ctn {
-    position: relative;
-    //width: 1300px;
-    .pdf-panel {
-      position: relative;
-      //padding-top: 150px;
-    }
-  }
+	display: flex;
+	justify-content: center;
+	.pdf-ctn {
+		width: 1300px;
+		margin-bottom: 15vh;
+		.pdf-panel {
+			position: relative;
+			padding-top: 100px;
+		}
+	}
 }
 
 .allInfo {
@@ -3840,7 +3949,7 @@ export default {
 
 	.basics-tr {
 		td:nth-child(2) {
-			justify-content: flex-start;
+			justify-content: center;
 		}
 	}
 }
@@ -3874,4 +3983,127 @@ th, td {
 	border: 1px solid #333;
 }
 
+.pdf-header {
+    font-weight: bold;
+    padding: 1.5vw 8.3vw;
+    width: 100%;
+    color: rgba(0, 0, 0, 0.85);
+    margin: 0;
+
+    .headerCon {
+        width: 100%;
+        border-bottom: 0.25vw solid rgba(0, 0, 0, 0.85);
+        display: flex;
+        justify-content: space-between;
+
+        .headerTitle {
+            font-size: 2.1875vw;
+            transform: translate(2%, 80%);
+            line-height: 2.1875vw;
+            margin-left: 0.5vw;
+        }
+
+        .sewpng {
+            width: 15%;
+            transform: translate(0%, 10%);
+            margin-top: -0.2vw;
+        }
+    }
+
+    .pageNum {
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+        font-size: 1.8vw;
+        font-weight: 600;
+
+        .pdf-footer-page-count {
+            margin-right: 1vw;
+        }
+    }
+}
+
+.a4main {
+	padding-top: 14vw;
+    width: 100%;
+    height: calc(100vw * sqrt(2));
+	// background-color: white;
+	.title {
+		width: 100%;
+		height: 6vw;
+		font-size: 4vw;
+		font-weight: bold;
+		text-align: center;
+		line-height: 6vw;
+        display: flex;
+        justify-content: center;
+	}
+	.table {
+		margin: 0 auto;
+		margin-top: 56.7vw;
+		width: 60vw;
+	}
+	.table .tr:nth-child(odd) {
+		background-color: #bfbfbf;
+	}
+	.tr {
+		height: 4.2vw;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		font-weight: 600;
+		font-size: 1.8vw;
+
+        .td {
+            height: 4.2vw;
+            line-height: 4.2vw;
+        }
+
+        .td:nth-child(odd) {
+            width: 32%;
+            padding-left: 0.1vw;
+        }
+
+        .td:nth-child(even) {
+            width: 68%;
+        }
+	}
+}
+
+.statement {
+    padding-top: 14.2vw;
+    width: 100%;
+    height: calc(100vw * sqrt(2));
+    /* background-color: white; */
+
+    .title {
+        font-weight: 600;
+        font-size: 2.7vw;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .title2 {
+        font-weight: 600;
+        margin-top: 18.2vw;
+    }
+
+    .content {
+        margin-top: 1.8vw;
+        padding: 0 6vw;
+        font-size: 1.7vw;
+        text-align: justify;
+        /*兼容ie*/
+        text-justify: distribute-all-lines;
+        line-height: 2.7vw;
+        text-indent: 0.9vw;
+    }
+
+    .content2 {
+        margin-top: 4vw;
+        font-size: 1.9vw;
+        text-indent: 3.9vw;
+    }
+}
 </style>
