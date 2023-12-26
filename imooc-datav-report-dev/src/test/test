@@ -1,0 +1,30 @@
+			splitDOMByElement(parentElement, splitElementClassName) {
+				// 获取所有子元素
+				var children = parentElement.children;
+
+				// 创建一个数组，用于存放分割后的小段
+				var chunks = [];
+				var currentChunk = document.createElement("div");
+
+				// 迭代子元素
+				for (var i = 0; i < children.length; i++) {
+					var child = children[i];
+
+					// 复制子元素并添加到当前小段
+					var clonedChild = child.cloneNode(true);
+					currentChunk.appendChild(clonedChild);
+
+					// 如果当前子元素是分割元素，则将当前小段添加到结果数组中，并重置当前小段
+					if (child.classList.contains(splitElementClassName)) {
+						chunks.push(currentChunk);
+						currentChunk = document.createElement("div");
+					}
+				}
+
+				// 将最后一个小段添加到结果数组中
+				if (currentChunk.children.length > 0) {
+					chunks.push(currentChunk);
+				}
+
+				return chunks;
+			},
