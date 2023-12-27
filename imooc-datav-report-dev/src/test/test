@@ -31,6 +31,19 @@
 
 							// 当达到每5个一组时，添加到结果数组中，并重置当前小段
 							if ((j + 1) % 5 === 0) {
+								// 查看是否有标题元素
+								var h3Element = currentChunk.querySelector('h3');
+								// 检查是否成功获取了 <h3> 元素
+								if (h3Element) {
+									// 获取 <h3> 元素的父元素
+									var parentDiv = h3Element.parentNode;
+									// 获取父元素中所有具有 class="detection" 的子元素
+									var detectionElements = parentDiv.querySelectorAll('.detection');
+									// 遍历并移除每个具有 class="detection" 的子元素
+									detectionElements.forEach(function(detectionElement) {
+										detectionElement.remove();
+									});
+								}
 								chunks.push(currentChunk);
 								currentChunk = document.createElement('div');
 							}
@@ -44,4 +57,4 @@
 				}
 
 				return chunks;
-			},
+			}
