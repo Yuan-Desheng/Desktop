@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
              xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI"
-             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-             targetNamespace="http://www.activiti.org/processdef">
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:flowable="http://flowable.org/bpmn"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.activiti.org/processdef">
     <process id="test" name="测试" isExecutable="true">
         <startEvent id="sid-590598C4-B0C6-4DCE-8C65-1B4C473964D2"/>
-        <userTask id="task-01" name="领导审批"/>
+        <userTask id="task-01" name="领导审批" flowable:roleOption="155" flowable:userOption="10141,10142"
+                  flowable:candidateGroups="2"/>
         <sequenceFlow id="sid-C49DB46C-17B9-469E-934C-015637BA86FC" sourceRef="sid-590598C4-B0C6-4DCE-8C65-1B4C473964D2"
                       targetRef="task-01"/>
         <exclusiveGateway id="sid-DF236505-2B41-497B-BB12-D5B36A65A489"
                           default="sid-59046FB9-ABD0-43B6-9FA0-916D6972573A"/>
         <sequenceFlow id="sid-D013FF31-68E1-4326-9A6D-520D9F03F11B" sourceRef="task-01"
                       targetRef="sid-DF236505-2B41-497B-BB12-D5B36A65A489"/>
-        <userTask id="task-21" name="HR 审批"/>
+        <userTask id="task-21" name="HR 审批" flowable:roleOption="156" flowable:userOption="10140"
+                  flowable:candidateGroups="2"/>
         <endEvent id="sid-A0912D5A-0AEF-47E6-A798-A29CE1FAD7FF">
             <incoming>sid-59046FB9-ABD0-43B6-9FA0-916D6972573A</incoming>
         </endEvent>
