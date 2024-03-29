@@ -1,7 +1,5 @@
 <template>
-  <div>
-    <v-chart :option="categoryOptions" style="height: 1000px"/>
-  </div>
+    <v-chart :option="categoryOptions" style="height: 700px"/>
 </template>
 
 <script>
