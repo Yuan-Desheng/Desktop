@@ -1,0 +1,45 @@
+cancelBubble
+:
+false
+event
+:
+PointerEvent {isTrusted: true, zrX: 351, zrY: 427, zrDelta: -0.3333333333333333, pointerId: 1, …}
+gestureEvent
+:
+undefined
+offsetX
+:
+351
+offsetY
+:
+427
+pinchScale
+:
+undefined
+pinchX
+:
+undefined
+pinchY
+:
+undefined
+stop
+:
+ƒ stopEvent()
+target
+:
+CompoundPath {…}
+topTarget
+:
+CompoundPath {…}
+type
+:
+"click"
+wheelDelta
+:
+-0.3333333333333333
+which
+:
+1
+zrByTouch
+:
+undefined
